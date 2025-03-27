@@ -1,10 +1,12 @@
 FROM alpine:3.10
 
-# Copy the entrypoint.sh script
+# Crear un directorio para almacenar el archivo de salida
+RUN mkdir -p /output
+
+# Copiar el archivo de entrada
 COPY entrypoint.sh /entrypoint.sh
 
-# Add execute permissions to the entrypoint.sh script
+# Cambiar los permisos para asegurarse de que el script sea ejecutable
 RUN chmod +x /entrypoint.sh
 
-# Set the entrypoint
 ENTRYPOINT ["/entrypoint.sh"]
