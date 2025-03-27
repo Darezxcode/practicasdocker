@@ -1,8 +1,10 @@
 FROM alpine:3.10
 
+# Copy the entrypoint.sh script
 COPY entrypoint.sh /entrypoint.sh
 
-# Aseguramos que el script tenga permisos de ejecución
+# Add execute permissions to the entrypoint.sh script
 RUN chmod +x /entrypoint.sh
 
+# Set the entrypoint
 ENTRYPOINT ["/entrypoint.sh"]
