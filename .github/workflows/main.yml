@@ -1,0 +1,41 @@
+name: Docker Action CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Paso 1: Check out el código del repositorio
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Paso 2: Establecer el contexto de la acción
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      # Paso 3: Construir la imagen Docker
+      - name: Build Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile
+          push: false
+
+      # Paso 4: Ejecutar la acción de Docker
+      - name: Run Hello World Action
+        id: hello-action
+        uses: ./
+        with:
+          who-to-greet: 'GitHub'
+
+      # Paso 5: Mostrar el tiempo de salida
+      - name: Display the output
+        run: echo "The action greeted at: ${{ steps.hello-action.outputs.time }}"
